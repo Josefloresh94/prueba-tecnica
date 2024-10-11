@@ -1,0 +1,32 @@
+<form class="w-75 my-3" (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
+    <label >Agrega una Tarea</label>
+    <input
+        type="text"
+        placeholder="Nueva tarea"
+        [(ngModel)]="newTask"
+        name="newTodo"
+        required
+        #newTodoInput="ngModel"
+        class="form-control m-3"
+        required minlength="5"
+    />
+    @if (newTodoInput.invalid && (newTodoInput.dirty || newTodoInput.touched)) {
+        @if (newTodoInput.errors!['required']) {
+            <div class="text-danger mx-3">
+                Nombre del producto es requerido!
+            </div>
+        }
+
+        @if (newTodoInput.errors!['minlength']) {
+            <div class="text-danger mx-3">
+                Nombre del producto debe de tener al menos 5 caracteres!
+            </div>
+        }
+    }
+    <button 
+        type="submit" 
+        class="btn btn-primary mx-3"
+        [disabled]="!taskForm.valid">
+        Agregar
+    </button>
+</form>

@@ -1,0 +1,69 @@
+<h4>Tareas</h4>
+@if(tasks.length > 0){
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Completed</th>
+                <th>Remove</th>
+                <th>Update</th>
+                <th>Save</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (task of tasks; track $index) {
+                <tr>
+                    <td>
+                        <input 
+                            [ngClass]="{'edit': task.edit, 'not-edit': !task.edit, 'crossed': task.edit}"
+                            #taskinput 
+                            type="text" 
+                            class="form-control" 
+                            id="taskInTable" 
+                            value="{{task.title}}"
+                            [readOnly]="!task.edit"
+                            [class.completed]="task.completed">
+                        
+                    </td>
+                    <td>
+                        <input 
+                            (change)="onToggleCompleted(task.id)" 
+                            id="myCheckbox" 
+                            type="checkbox">
+                    </td>
+                    <td>
+                        <button 
+                            id="delete" 
+                            class="btn btn-danger btn-sm" 
+                            (click)="onDelete(task.id)">
+                            Delete
+                        </button>
+                    </td>
+                    <td>
+                        <button 
+                            id="edit" 
+                            class="btn btn-primary btn-sm" 
+                            [disabled]="task.edit"
+                            (click)="onEdit($index)"
+                            >
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button 
+                            id="save" 
+                            class="btn btn-warning btn-sm" 
+                            (click)="onSave($index, taskinput.value)"
+                            [disabled]="!task.edit">
+                            Save
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} @else {
+    <div class="alert alert-warning">
+        Aún no tiene tareas por realizar
+    </div>
+}
